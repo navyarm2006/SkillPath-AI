@@ -1,0 +1,556 @@
+
+/* SkillPath AI — Hackathon Dashboard Design */
+
+:root {
+    --primary: #6254e8;
+    --primary-dark: #4938c7;
+    --navy: #172554;
+    --background: #f5f6fc;
+    --surface: #ffffff;
+    --text: #202b45;
+    --muted: #69758d;
+    --border: #e3e7f2;
+    --success: #16845b;
+    --shadow: 0 12px 35px rgba(36, 43, 90, 0.08);
+    --radius: 20px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:
+        radial-gradient(circle at 5% 0%, #e8e6ff 0, transparent 30%),
+        radial-gradient(circle at 100% 35%, #eaf3ff 0, transparent 25%),
+        var(--background);
+    color: var(--text);
+    line-height: 1.65;
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 17px max(24px, calc((100% - 1080px) / 2));
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid rgba(227, 231, 242, 0.9);
+    backdrop-filter: blur(14px);
+}
+
+.navbar h1,
+.navbar .logo {
+    margin: 0;
+    color: var(--navy);
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -0.7px;
+}
+
+.navbar a {
+    color: var(--primary);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.container {
+    width: min(100% - 36px, 1000px);
+    margin: 0 auto;
+    padding: 35px 0 60px;
+}
+
+.hero {
+    text-align: center;
+    padding: 35px 12px 40px;
+}
+
+.tagline {
+    display: inline-block;
+    padding: 7px 15px;
+    border: 1px solid #dcd8ff;
+    border-radius: 30px;
+    background: #eeecff;
+    color: var(--primary-dark);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.hero h1,
+.hero h2 {
+    max-width: 780px;
+    margin: 18px auto 14px;
+    color: var(--navy);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -1.7px;
+}
+
+.subtitle {
+    max-width: 650px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 17px;
+}
+
+.profile-card,
+.result,
+#progressSection {
+    margin: 24px auto;
+    padding: clamp(22px, 4vw, 36px);
+    border: 1px solid rgba(227, 231, 242, 0.95);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: var(--shadow);
+}
+
+.profile-card h2,
+.result h2,
+#progressSection h2 {
+    margin-top: 0;
+    color: var(--navy);
+    font-size: 25px;
+    letter-spacing: -0.5px;
+}
+
+form {
+    display: grid;
+    gap: 10px;
+}
+
+label {
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+    width: 100%;
+    min-height: 48px;
+    margin-bottom: 10px;
+    padding: 12px 14px;
+    border: 1px solid #d8deed;
+    border-radius: 11px;
+    background: #fbfcff;
+    color: var(--text);
+    font: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(98, 84, 232, 0.12);
+}
+
+button {
+    min-height: 48px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), #8374f5);
+    color: #fff;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(98, 84, 232, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(98, 84, 232, 0.28);
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #a99fff;
+    outline-offset: 3px;
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.back-button {
+    margin: 0 0 20px;
+    border: 1px solid #dedbff;
+    background: #fff;
+    color: var(--primary-dark);
+    box-shadow: none;
+}
+
+.back-button:hover {
+    background: #f0efff;
+    box-shadow: none;
+}
+
+.result h3,
+#progressSection h3 {
+    margin-top: 26px;
+    color: var(--navy);
+    font-size: 20px;
+    letter-spacing: -0.3px;
+}
+
+.result ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+}
+
+.result li {
+    margin: 0;
+    padding: 9px 14px;
+    border: 1px solid #e0dcff;
+    border-radius: 10px;
+    background: #f0eeff;
+    color: #493bb5;
+    font-weight: 700;
+}
+
+.result p {
+    line-height: 1.8;
+}
+
+#dashboardScreen .hero {
+    padding-top: 22px;
+    padding-bottom: 20px;
+}
+
+#dashboardScreen .hero h1 {
+    background: linear-gradient(135deg, #172554, #6d5ce7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#dashboardScreen .result,
+#dashboardScreen #progressSection {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+#dashboardScreen #result > p {
+    margin: 12px 0;
+    padding: 16px 18px;
+    border: 1px solid #e4e7f3;
+    border-left: 4px solid #7869ed;
+    border-radius: 13px;
+    background: #fafaff;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#dashboardScreen #result > p:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(36, 43, 90, 0.07);
+}
+
+#dashboardScreen #result h2,
+#dashboardScreen #result h3 {
+    margin-top: 24px;
+    margin-bottom: 14px;
+    color: #25264f;
+}
+
+#progressSection progress,
+#progressBar {
+    display: block;
+    width: 100%;
+    height: 13px;
+    margin: 16px 0 24px;
+    overflow: hidden;
+    border: none;
+    border-radius: 20px;
+    background: #e8e9f5;
+    accent-color: var(--primary);
+}
+
+#progressSection progress::-webkit-progress-bar,
+#progressBar::-webkit-progress-bar {
+    border-radius: 20px;
+    background: #e8e9f5;
+}
+
+#progressSection progress::-webkit-progress-value,
+#progressBar::-webkit-progress-value {
+    border-radius: 20px;
+    background: linear-gradient(90deg, var(--primary), #a18aff);
+}
+
+#progressText {
+    color: var(--success);
+    font-weight: 800;
+}
+
+#dashboardScreen #taskList label,
+#taskList label {
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    margin: 10px 0 !important;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: #fcfcff;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s, border-color 0.2s;
+}
+
+#dashboardScreen #taskList label:hover,
+#taskList label:hover {
+    transform: translateX(3px);
+    border-color: #c9c2ff;
+}
+
+#dashboardScreen #taskList input[type="checkbox"],
+#taskList input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin: 0;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+#dashboardScreen #taskList label:has(input:checked),
+#taskList label:has(input:checked) {
+    border-color: #a8dfc5;
+    background: #edfaf3;
+    color: var(--success);
+}
+
+#practiceArea {
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: #fafaff;
+}
+
+#practiceOptions label {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0 !important;
+    padding: 12px 14px;
+    border: 1px solid #e2e5f5;
+    border-radius: 11px;
+    background: #fff;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+#practiceOptions label:hover {
+    border-color: #c9c2ff;
+    background: #f7f6ff;
+}
+
+#practiceOptions input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    margin: 0;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+#practiceFeedback {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #f0efff;
+    color: #40349f;
+    overflow-wrap: anywhere;
+}
+
+/* Free learning resource cards */
+
+#resourcesList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.resource-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: linear-gradient(145deg, #fff, #fafaff);
+    box-shadow: 0 5px 18px rgba(36, 43, 90, 0.04);
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.resource-card:hover {
+    transform: translateY(-3px);
+    border-color: #c9c2ff;
+    box-shadow: 0 10px 25px rgba(36, 43, 90, 0.08);
+}
+
+.resource-card h4 {
+    margin: 0 0 8px;
+    color: var(--navy);
+    font-size: 17px;
+}
+
+.resource-card p {
+    margin: 5px 0 12px;
+    color: var(--muted);
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.resource-card a {
+    display: inline-block;
+    margin-top: auto;
+    padding-top: 8px;
+    color: var(--primary-dark);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.resource-card a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+
+footer {
+    padding: 24px 16px;
+    color: var(--muted);
+    font-size: 14px;
+    text-align: center;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* Responsive layout */
+
+@media (max-width: 600px) {
+    .navbar {
+        padding: 15px 18px;
+    }
+
+    .navbar h1,
+    .navbar .logo {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        width: min(100% - 24px, 1000px);
+        padding-top: 20px;
+    }
+
+    .hero {
+        padding: 15px 4px 18px;
+    }
+
+    .hero h1,
+    .hero h2 {
+        font-size: 32px;
+        letter-spacing: -1px;
+    }
+
+    .subtitle {
+        font-size: 15px;
+    }
+
+    .profile-card,
+    .result,
+    #progressSection {
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    #dashboardScreen .back-button {
+        width: 100%;
+    }
+
+    #dashboardScreen #result > p,
+    #dashboardScreen #taskList label {
+        padding: 13px;
+    }
+
+    #practiceArea {
+        padding: 14px;
+    }
+
+    .resource-card {
+        padding: 17px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+
+/* Keep hidden sections hidden */
+[hidden] {
+    display: none !important;
+}
+
+
+/* Smooth, polished card interactions */
+.card,
+.task-card,
+.resource-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover,
+.task-card:hover,
+.resource-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 35px rgba(36, 43, 90, 0.12);
+}
+
+/* Clear keyboard focus */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgba(98, 84, 232, 0.35);
+    outline-offset: 3px;
+}
+/* Reduce hero section whitespace on laptop */
+@media (min-width: 601px) {
+    .hero {
+        padding-top: 35px;
+        padding-bottom: 35px;
+    }
+}
+

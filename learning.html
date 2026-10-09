@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillPath AI | Learning Centre</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .learning-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .learning-tabs button {
+            padding: 12px 18px;
+            cursor: pointer;
+        }
+        .learning-tabs button.active {
+            background: #2563eb;
+            color: white;
+        }
+        .learning-panel {
+            margin-top: 20px;
+        }
+        .learning-card {
+            padding: 16px;
+            margin: 14px 0;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+        }
+        .learning-card a {
+            display: inline-block;
+            margin-top: 8px;
+        }
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            cursor: pointer;
+            text-align: left;
+        }
+        #feedback {
+            margin: 16px 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <button class="back-button" id="backButton" type="button">
+            ← Back to Your Roadmap
+        </button>
+
+        <section class="result">
+            <h1>🎯 SkillPath AI Learning Centre</h1>
+            <p>Learn a skill, practise it, and build your career step by step.</p>
+
+            <nav class="learning-tabs" aria-label="Learning sections">
+                <button id="tutorialTab" class="active" type="button">
+                    📚 Free Tutorials
+                </button>
+                <button id="practiceTab" type="button">
+                    🧠 Practice Zone
+                </button>
+            </nav>
+
+            <section id="tutorialPanel" class="learning-panel">
+                <h2>📚 Free Learning Tutorials</h2>
+                <p>Choose a tutorial and learn at your own pace.</p>
+
+                <div class="learning-card">
+                    <h3>🐍 Python Programming</h3>
+                    <p>Learn Python fundamentals and coding practice.</p>
+                    <a href="https://www.kaggle.com/learn/python"
+                       target="_blank" rel="noopener noreferrer">
+                        Start Python Tutorial →
+                    </a>
+                </div>
+
+                <div class="learning-card">
+                    <h3>📊 SQL</h3>
+                    <p>Learn how to query databases.</p>
+                    <a href="https://sqlbolt.com/"
+                       target="_blank" rel="noopener noreferrer">
+                        Start SQL Tutorial →
+                    </a>
+                </div>
+
+                <div class="learning-card">
+                    <h3>🐼 Pandas</h3>
+                    <p>Practise analysing data using Python.</p>
+                    <a href="https://www.kaggle.com/learn/pandas"
+                       target="_blank" rel="noopener noreferrer">
+                        Start Pandas Tutorial →
+                    </a>
+                </div>
+
+                <div class="learning-card">
+                    <h3>🤖 Machine Learning</h3>
+                    <p>Explore machine learning concepts and exercises.</p>
+                    <a href="https://www.kaggle.com/learn/intro-to-machine-learning"
+                       target="_blank" rel="noopener noreferrer">
+                        Start ML Tutorial →
+                    </a>
+                </div>
+
+                <div class="learning-card">
+                    <h3>📈 More Free Courses</h3>
+                    <p>Explore other skills for your career.</p>
+                    <a href="https://www.kaggle.com/learn"
+                       target="_blank" rel="noopener noreferrer">
+                        Explore Courses →
+                    </a>
+                </div>
+            </section>
+
+            <section id="practicePanel" class="learning-panel" hidden>
+                <h2>🧠 Python Practice Zone</h2>
+                <p>Answer each question and check your understanding.</p>
+
+                <h3 id="questionNumber">Question 1 of 5</h3>
+                <h3 id="question">Loading question...</h3>
+                <div id="options"></div>
+                <p id="feedback" aria-live="polite"></p>
+                <button id="nextButton" type="button" hidden>
+                    Next Question →
+                </button>
+                <p id="score">Score: 0</p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const tutorialTab = document.getElementById("tutorialTab");
+        const practiceTab = document.getElementById("practiceTab");
+        const tutorialPanel = document.getElementById("tutorialPanel");
+        const practicePanel = document.getElementById("practicePanel");
+
+        function showTab(tab) {
+            const showTutorials = tab === "tutorials";
+
+            tutorialPanel.hidden = !showTutorials;
+            practicePanel.hidden = showTutorials;
+            tutorialTab.classList.toggle("active", showTutorials);
+            practiceTab.classList.toggle("active", !showTutorials);
+        }
+
+        tutorialTab.addEventListener("click", () => showTab("tutorials"));
+        practiceTab.addEventListener("click", () => showTab("practice"));
+
+        // Return to the previous page rather than reloading index.html.
+        document.getElementById("backButton").addEventListener("click", () => {
+            if (document.referrer &&
+                new URL(document.referrer).origin === window.location.origin &&
+                window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        const questions = [
+            {
+                question: "What is the output of print(2 + 3)?",
+                options: ["4", "5", "6", "23"],
+                answer: "5"
+            },
+            {
+                question: "Which symbol starts a single-line Python comment?",
+                options: ["//", "#", "/*", "&"],
+                answer: "#"
+            },
+            {
+                question: "What is the result of 10 % 3?",
+                options: ["3", "1", "0", "10"],
+                answer: "1"
+            },
+            {
+                question: "Which data type represents True or False?",
+                options: ["int", "str", "bool", "list"],
+                answer: "bool"
+            },
+            {
+                question: "Which keyword repeats a loop while a condition is true?",
+                options: ["repeat", "while", "return", "define"],
+                answer: "while"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        const questionNumber = document.getElementById("questionNumber");
+        const questionElement = document.getElementById("question");
+        const optionsElement = document.getElementById("options");
+        const feedback = document.getElementById("feedback");
+        const nextButton = document.getElementById("nextButton");
+        const scoreElement = document.getElementById("score");
+
+        function showQuestion() {
+            answered = false;
+            const q = questions[currentQuestion];
+
+            questionNumber.textContent =
+                `Question ${currentQuestion + 1} of ${questions.length}`;
+            questionElement.textContent = q.question;
+            feedback.textContent = "";
+            nextButton.hidden = true;
+            optionsElement.replaceChildren();
+
+            q.options.forEach(option => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "quiz-option";
+                button.textContent = option;
+                button.addEventListener("click", () => checkAnswer(option));
+                optionsElement.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selected) {
+            if (answered) return;
+            answered = true;
+
+            const correct = questions[currentQuestion].answer;
+
+            if (selected === correct) {
+                score++;
+                feedback.textContent = "✅ Correct! Well done!";
+            } else {
+                feedback.textContent =
+                    `❌ The correct answer is ${correct}. Keep learning!`;
+            }
+
+            scoreElement.textContent = `Score: ${score}`;
+
+            Array.from(optionsElement.children).forEach(button => {
+                button.disabled = true;
+                if (button.textContent === correct) {
+                    button.style.border = "2px solid green";
+                }
+            });
+
+            nextButton.hidden = false;
+            nextButton.textContent =
+                currentQuestion === questions.length - 1
+                    ? "See Final Score"
+                    : "Next Question →";
+        }
+
+        nextButton.addEventListener("click", () => {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                questionNumber.textContent = "Practice Complete!";
+                questionElement.textContent =
+                    `Your final score is ${score} out of ${questions.length}.`;
+                optionsElement.replaceChildren();
+                feedback.textContent = "Keep practising to improve your skills!";
+                nextButton.hidden = true;
+            }
+        });
+
+        showQuestion();
+    </script>
+</body>
+</html>

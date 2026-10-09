@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillPath AI | Your Career Journey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <h2>🚀 SkillPath AI</h2>
+        <span>Your Career. Your Path.</span>
+    </header>
+
+    <main class="container">
+
+        <!-- SCREEN 1: PROFILE FORM -->
+        <section id="profileScreen">
+
+            <section class="hero">
+                <p class="tagline">YOUR PERSONAL AI LEARNING GUIDE</p>
+                <h1>Turn Your Career Dreams<br>Into a Learning Path.</h1>
+                <p class="subtitle">
+                    Discover the skills you need, follow your roadmap,
+                    and take the next step towards your dream job.
+                </p>
+            </section>
+
+            <section class="profile-card">
+                <h2>Create Your Learning Profile</h2>
+                <p>Tell us about your career goals.</p>
+
+                <form id="profileForm">
+                    <label for="studentName">Your name</label>
+                    <input type="text" id="studentName"
+                           placeholder="Enter your name" required>
+
+                    <label for="career">Your target career</label>
+                    <select id="career" required>
+                        <option value="">Choose your dream job</option>
+                        <option value="ml engineer">Machine Learning Engineer</option>
+                        <option value="data analyst">Data Analyst</option>
+                        <option value="python developer">Python Developer</option>
+                    </select>
+
+                    <label for="skills">Skills you already know</label>
+                    <input type="text" id="skills"
+                           placeholder="e.g. Python, SQL">
+
+                    <label for="hours">Daily learning time</label>
+                    <select id="hours" required>
+                        <option value="1">1 hour</option>
+                        <option value="2" selected>2 hours</option>
+                        <option value="3">3 hours</option>
+                        <option value="4">4 hours</option>
+                    </select>
+
+                    <button type="submit">Create My Learning Path →</button>
+                </form>
+            </section>
+        </section>
+
+        <!-- SCREEN 2: LEARNING DASHBOARD -->
+        <section id="dashboardScreen" hidden>
+
+            <section class="hero">
+                <p class="tagline">YOUR PERSONAL LEARNING DASHBOARD</p>
+                <h1>Your Career Journey Starts Here!</h1>
+                <p class="subtitle">
+                    Follow your roadmap, complete daily tasks,
+                    and build skills for your dream career.
+                </p>
+            </section>
+
+            <button type="button" id="backButton" class="back-button">
+                ← Back to Profile
+            </button>
+
+            <!-- Learning roadmap and API results -->
+            <div id="result" class="result" hidden></div>
+
+            <!-- Progress tracker -->
+            <section id="progressSection" class="result" hidden>
+                <h2>Your Learning Progress</h2>
+                <p id="progressText">0 of 7 days completed</p>
+                <progress id="progressBar" value="0" max="7"></progress>
+
+                <h3>Daily Tasks</h3>
+                <div id="taskList"></div>
+            </section>
+
+            <!-- Personalized recommendations stay visible -->
+            <section id="recommendationSection" class="result">
+                <h2>🎯 Your Personalized Recommendations</h2>
+                <p id="recommendationIntro">
+                    Skills recommended for your career goal.
+                </p>
+
+                <div id="recommendationList"></div>
+
+                <div class="section-actions">
+                    <button type="button" id="openResourcesButton">
+                        📚 Explore Free Tutorials
+                    </button>
+
+                    <button type="button" id="openPracticeButton">
+                        🧠 Practice Now
+                    </button>
+                </div>
+            </section>
+
+            <!-- Tutorial section: hidden until requested -->
+            <section id="resourcesSection" class="result" hidden>
+                <button type="button" id="backToRecommendationsFromResources"
+                        class="back-button">
+                    ← Back to Recommendations
+                </button>
+
+                <h2>📚 Free Learning Resources</h2>
+                <p id="resourcesIntro">
+                    Explore free tutorials to build skills for your career.
+                </p>
+
+                <div id="resourcesList"></div>
+            </section>
+
+            <!-- Practice section: hidden until requested -->
+            <section id="practiceSection" class="result" hidden>
+                <button type="button" id="backToRecommendationsFromPractice"
+                        class="back-button">
+                    ← Back to Recommendations
+                </button>
+
+                <h2>🧠 Practice Zone</h2>
+                <p>Test your knowledge and strengthen your skills.</p>
+
+                <div id="practiceArea">
+                    <p id="practiceQuestion">
+                        Your practice question will appear here.
+                    </p>
+
+                    <div id="practiceOptions"></div>
+
+                    <button type="button" id="checkAnswerButton">
+                        Check Answer
+                    </button>
+
+                    <p id="practiceFeedback"></p>
+                </div>
+            </section>
+
+        </section>
+
+        <footer>
+            <p>Learn a little every day. Build your future.</p>
+            <p>SkillPath AI © 2026</p>
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
